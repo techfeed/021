@@ -1,0 +1,74 @@
+var fs = require('fs');
+var ECT = require('ect');
+var _ = require('underscore');
+var s = require('underscore.string');
+
+var DEST_ROOT = 'result/www/';
+
+var renderer = ECT({ root: 'templates', ext: '.ect' });
+var templateParams = {
+	detectModelPath: detectModelPath,
+	generate: generate,
+	_: _,
+	s: s,
+	mergeEnv: function(merged) {
+		var clone = _.clone(this);
+		return _.extend(clone, merged);
+	}
+};
+
+loadModelDefs();
+generate('template', 'index.html', {});
+
+function loadModelDefs() {
+	var dirpath = '../openfest/common/models/';
+	var modelFiles = fs.readdirSync(dirpath).filter(function(path) {
+		return /\.json$/.test(path);
+	});
+	var modelDefs = {};
+	modelFiles.forEach(function(fileName) {
+		var json = fs.readFileSync(dirpath + fileName);
+		var modelObj = JSON.parse(json);
+		modelDefs[modelObj.name] = modelObj;
+	});
+	templateParams.models = modelDefs;
+}
+
+function generate(template, dest, params) {
+	var filePath = DEST_ROOT + dest;
+	var dirPath = filePath.substring(0, filePath.lastIndexOf('/'));
+	var dirStat = null;
+	try {
+		dirStat = fs.statSync(dirPath);
+	} catch (ignored) {
+	}
+	if (dirStat && dirStat.isFile()) {
+		throw dirPath + ' is already exists, but is file (directory expected).';
+	}
+	try {
+		fs.mkdirSync(dirPath);
+	} catch (ignored) {
+	}
+	var clone = _.clone(templateParams);
+	params = _.extend(clone, params);
+
+	var text = renderer.render(template, params);
+
+	var fd = -1;
+	try {
+		fd = fs.openSync(filePath, 'w');
+		fs.writeFileSync(filePath, text);
+	} finally {
+		if (fd >= 0) {
+			fs.closeSync(fd);
+		}
+	}
+}
+
+function detectModelPath(model) {
+	if (model.plural) {
+		return '/' + model.plural;
+	}
+	var modelName = model.name.toLowerCase();
+	return '/' + modelName + 's';
+}

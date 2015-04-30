@@ -1,0 +1,25 @@
+angular
+  .module('app')
+  .controller('<%= @model.name %>ListController', ['$scope', '<%= @model.name %>', function($scope,
+    <%= @model.name %>) {
+    $scope.records = <%= @model.name %>.find();
+  }])
+  .controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
+      '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
+    $scope.submitForm = function() {
+      <%
+        properties = []
+        for name, def of @model.properties
+          properties.push("#{name}: $scope.#{name}")
+      %>
+      <%= @model.name %>
+        .create({
+          <%= properties.join(',\n') %>
+        })
+        .$promise
+        .then(function(event) {
+          //$state.go('all-events');
+          //$scope.ons.navigator.pushPage('page2.html', {title: item});
+        });
+    };
+  }]);

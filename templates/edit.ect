@@ -1,0 +1,67 @@
+<ons-template id="<%- @detectModelPath @model %>/edit.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="<%- @navigator %>.popPage();">
+            Cancel
+          </ons-toolbar-button>
+        </div>
+        <div class="center">Edit <%- @model.name %></div>
+        <div class="right">
+          <ons-toolbar-button>
+            Save
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+      <form>
+        <ons-list modifier="inset" class="form-layout">
+          <% for name, def of @model.properties: %>
+            <ons-list-item>
+              <% switch def.type: %>
+                <% when 'boolean': %>
+                  <ons-row>
+                    <ons-col>
+                      <label class="list-item-label"><%= @s.capitalize(name) %></label>
+                    </ons-col>
+                    <ons-col align="right">
+                      <ons-switch modifier="list-item"></ons-switch>
+                    </ons-col>
+                  </ons-row>
+                <% end %>
+                <% when 'string': %>
+                  <input type="text" class="text-input text-input--transparent width-full"
+                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                <% end %>
+                <% when 'number': %>
+                  <input type="number" class="text-input text-input--transparent width-full"
+                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                <% end %>
+                <% when 'date': %>
+                  <ons-row>
+                    <ons-col width="30px">
+                      <ons-icon icon="fa-calendar" class="list-item-icon"></ons-icon>
+                    </ons-col>
+                    <ons-col>
+                      <input type="date" class="text-input text-input--transparent width-full"
+                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                    </ons-col>
+                  </ons-row>
+                <% end %>
+                <% when 'geopoint': %>
+                  <ons-row>
+                    <ons-col width="30px">
+                      <ons-icon icon="fa-map-marker" class="list-item-icon"></ons-icon>
+                    </ons-col>
+                    <ons-col>
+                      <input type="text" class="text-input text-input--transparent width-full"
+                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                    </ons-col>
+                  </ons-row>
+                <% end %>
+              <% end %>
+            </ons-list-item>
+          <% end %>
+        </ons-list>
+      </form>
+    </ons-page>
+</ons-template>
