@@ -3,7 +3,7 @@ var ECT = require('ect');
 var _ = require('underscore');
 var s = require('underscore.string');
 
-var DEST_ROOT = 'result/www/';
+var DEST_ROOT = '../openfest/client/result/www/';
 
 var renderer = ECT({ root: 'templates', ext: '.ect' });
 var templateParams = {
