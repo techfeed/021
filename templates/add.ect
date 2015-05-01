@@ -1,5 +1,5 @@
 <ons-template id="<%- @detectModelPath @model %>/add.html">
-    <ons-page>
+    <ons-page ng-controller="<%= @model.name %>AddController">
       <ons-toolbar>
         <div class="left">
           <ons-toolbar-button onclick="<%- @navigator %>.popPage();">
@@ -8,7 +8,7 @@
         </div>
         <div class="center">New <%- @model.name %></div>
         <div class="right">
-          <ons-toolbar-button>
+          <ons-toolbar-button ng-click="create()">
             Save
           </ons-toolbar-button>
         </div>
@@ -24,17 +24,19 @@
                       <label class="list-item-label"><%= @s.capitalize(name) %></label>
                     </ons-col>
                     <ons-col align="right">
-                      <ons-switch modifier="list-item"></ons-switch>
+                      <ons-switch modifier="list-item" ng-model="<%= name %>"></ons-switch>
                     </ons-col>
                   </ons-row>
                 <% end %>
                 <% when 'string': %>
                   <input type="text" class="text-input text-input--transparent width-full"
-                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                    ng-model="<%= name %>">
                 <% end %>
                 <% when 'number': %>
                   <input type="text" class="text-input text-input--transparent width-full"
-                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                    placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                    ng-model="<%= name %>">
                 <% end %>
                 <% when 'date': %>
                   <ons-row>
@@ -43,7 +45,8 @@
                     </ons-col>
                     <ons-col>
                       <input type="text" class="text-input text-input--transparent width-full"
-                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                        ng-model="<%= name %>">
                     </ons-col>
                   </ons-row>
                 <% end %>
@@ -54,7 +57,8 @@
                     </ons-col>
                     <ons-col>
                       <input type="text" class="text-input text-input--transparent width-full"
-                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
+                        placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                        ng-model="<%= name %>">
                     </ons-col>
                   </ons-row>
                 <% end %>
