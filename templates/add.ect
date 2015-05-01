@@ -33,7 +33,7 @@
                     placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
                 <% end %>
                 <% when 'number': %>
-                  <input type="number" class="text-input text-input--transparent width-full"
+                  <input type="text" class="text-input text-input--transparent width-full"
                     placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
                 <% end %>
                 <% when 'date': %>
@@ -42,7 +42,7 @@
                       <ons-icon icon="fa-calendar" class="list-item-icon"></ons-icon>
                     </ons-col>
                     <ons-col>
-                      <input type="date" class="text-input text-input--transparent width-full"
+                      <input type="text" class="text-input text-input--transparent width-full"
                         placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>>
                     </ons-col>
                   </ons-row>
