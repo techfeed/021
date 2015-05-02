@@ -8,7 +8,8 @@
 		<% include 'list', @mergeEnv({navigator: navigator, model: modelDef}) %>
 		<% include 'add', @mergeEnv({navigator: navigator, model: modelDef}) %>
 		<% include 'detail', @mergeEnv({navigator: navigator, model: modelDef}) %>
-		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
+		<% include 'edit', @mergeEnv({navigator: navigator, model: modelDef}) %>
+		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({navigator: navigator, model: modelDef}) %>
 	<% end %>
 </ons-navigator>
 

@@ -3,12 +3,25 @@ angular
   .controller('<%= @model.name %>ListController', ['$scope', '<%= @model.name %>', function($scope,
     <%= @model.name %>) {
     $scope.records = <%= @model.name %>.find();
+    $scope.showDetail = function(id) {
+      <%- @navigator %>.pushPage('<%- @detectModelPath @model %>/detail.html', { animation : 'slide', recordId: id } );
+    };
+  }])
+  .controller('<%= @model.name %>DetailController', ['$scope', '<%= @model.name %>', function($scope,
+    <%= @model.name %>) {
+    var page = <%- @navigator %>.getCurrentPage();
+    var recordId = page.options.recordId;
+    $scope.record = <%= @model.name %>.findById({id: recordId});
+
+    $scope.edit = function() {
+      <%- @navigator %>.pushPage('<%- @detectModelPath @model %>/edit.html', { animation : 'lift', recordId: recordId } );
+    };
   }])
   .controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
       '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
-    $scope.create = function() {
+    $scope.save = function() {
       <% for name, def of @model.properties: %>
-        var _<%= name %> = $scope.<%= name %>;
+        var _<%= name %> = $scope.record.<%= name %>;
         <% switch def.type: %>
           <% when 'number': %>
             _<%= name %> = Number(_<%= name %>);
@@ -31,9 +44,44 @@ angular
         .create(requestParams)
         .$promise
         .then(function(record) {
-          // goto details page
-          console.log(record);
-          //ons.navigator.pushPage('page2.html', {title: item});
+          <%- @navigator %>.popPage({ recordId: record.id } );
+        });
+    };
+  }])
+  .controller('<%= @model.name %>EditController', ['$scope', '<%= @model.name %>', '$rootScope',
+      '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
+    var page = <%- @navigator %>.getCurrentPage();
+    var recordId = page.options.recordId;
+    $scope.record = <%= @model.name %>.findById({id: recordId});
+
+    $scope.save = function() {
+      <% for name, def of @model.properties: %>
+        var _<%= name %> = $scope.record.<%= name %>;
+        <% switch def.type: %>
+          <% when 'number': %>
+            _<%= name %> = Number(_<%= name %>);
+          <% end %>
+          <% when 'date': %>
+            _<%= name %> = new Date(_<%= name %>).toISOString();
+          <% end %>
+          <% when 'boolean': %>
+            _<%= name %> = !!_<%= name %>;
+          <% end %>
+        <% end %>
+      <% end %>
+
+      var requestParams = {
+        id: recordId
+      };
+      <% for name, def of @model.properties: %>
+        requestParams['<%= name %>'] = _<%= name %>;
+      <% end %>
+
+      <%= @model.name %>
+        .update({where: {id: recordId}}, requestParams)
+        .$promise
+        .then(function(record) {
+          <%- @navigator %>.popPage({ recordId: record.id } );
         });
     };
   }]);
