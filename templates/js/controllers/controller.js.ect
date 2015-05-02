@@ -16,6 +16,27 @@ angular
     $scope.edit = function() {
       <%- @navigator %>.pushPage('<%- @detectModelPath @model %>/edit.html', { animation : 'lift', recordId: recordId } );
     };
+
+    $scope.remove = function() {
+      ons.notification.confirm({
+        message: 'Are you sure?',
+        title: 'Alert',
+        buttonLabels: ['Yes', 'No'],
+        primaryButtonIndex: 1,
+        cancelable: true,
+        callback: function(index) {
+          if (index !== 0) {
+            return;
+          }
+          <%= @model.name %>
+            .removeById({id: recordId})
+            .$promise
+            .then(function() {
+              <%- @navigator %>.popPage();
+            });
+        }
+      });
+    };
   }])
   .controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
       '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
@@ -44,7 +65,7 @@ angular
         .create(requestParams)
         .$promise
         .then(function(record) {
-          <%- @navigator %>.popPage({ recordId: record.id } );
+          <%- @navigator %>.popPage({ recordId: record.id });
         });
     };
   }])
@@ -81,7 +102,7 @@ angular
         .update({where: {id: recordId}}, requestParams)
         .$promise
         .then(function(record) {
-          <%- @navigator %>.popPage({ recordId: record.id } );
+          <%- @navigator %>.popPage({ recordId: record.id });
         });
     };
   }]);
