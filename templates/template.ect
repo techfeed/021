@@ -3,13 +3,13 @@
 <% navigator = 'myNavigator' %>
 
 <ons-navigator title="Navigator" var="<%- navigator %>">
-	<% include 'models-index', @mergeEnv({navigator: navigator}) %>
+	<% include 'models-index' %>
 	<% for modelName, modelDef of @models: %>
-		<% include 'list', @mergeEnv({navigator: navigator, model: modelDef}) %>
-		<% include 'add', @mergeEnv({navigator: navigator, model: modelDef}) %>
-		<% include 'detail', @mergeEnv({navigator: navigator, model: modelDef}) %>
-		<% include 'edit', @mergeEnv({navigator: navigator, model: modelDef}) %>
-		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({navigator: navigator, model: modelDef}) %>
+		<% @generate 'view/list', "view/#{@detectModelPath(modelDef)}/list.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/add', "view/#{@detectModelPath(modelDef)}/add.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/detail', "view/#{@detectModelPath(modelDef)}/detail.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/edit', "view/#{@detectModelPath(modelDef)}/edit.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
 	<% end %>
 </ons-navigator>
 

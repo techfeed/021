@@ -1,12 +1,19 @@
 var fs = require('fs');
 var ECT = require('ect');
+var mkdirp = require('mkdirp');
 var _ = require('underscore');
 var s = require('underscore.string');
 
+
 var DEST_ROOT = '../openfest/client/result/www/';
+var NAVIGATOR_NAME = 'myNavigator';
+var VIEW_ROOT = 'view';
 
 var renderer = ECT({ root: 'templates', ext: '.ect' });
 var templateParams = {
+	navigator: NAVIGATOR_NAME,
+	viewRoot: VIEW_ROOT,
+	contextRoot: '/result/www',
 	detectModelPath: detectModelPath,
 	generate: generate,
 	_: _,
@@ -46,8 +53,9 @@ function generate(template, dest, params) {
 		throw dirPath + ' is already exists, but is file (directory expected).';
 	}
 	try {
-		fs.mkdirSync(dirPath);
+		mkdirp.sync(dirPath);
 	} catch (ignored) {
+		console.log(ignored)
 	}
 	var clone = _.clone(templateParams);
 	params = _.extend(clone, params);
@@ -56,19 +64,19 @@ function generate(template, dest, params) {
 
 	var fd = -1;
 	try {
-		fd = fs.openSync(filePath, 'w');
+//		fd = fs.openSync(filePath, 'w');
 		fs.writeFileSync(filePath, text);
 	} finally {
-		if (fd >= 0) {
-			fs.closeSync(fd);
-		}
+//		if (fd >= 0) {
+//			fs.closeSync(fd);
+//		}
 	}
 }
 
 function detectModelPath(model) {
 	if (model.plural) {
-		return '/' + model.plural;
+		return model.plural;
 	}
 	var modelName = model.name.toLowerCase();
-	return '/' + modelName + 's';
+	return modelName + 's';
 }

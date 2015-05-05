@@ -5,7 +5,8 @@
   "dependencies": {
     "ect": "^0.5.9",
     "underscore": "^1.8.3",
-    "underscore.string": "^3.0.3"
+    "underscore.string": "^3.0.3",
+    "mkdirp": "^0.5.0"
   },
   "optionalDependencies": {},
   "devDependencies": {},
