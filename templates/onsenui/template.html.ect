@@ -1,8 +1,6 @@
 <% extend 'layout.html' %>
 
-<% navigator = 'myNavigator' %>
-
-<ons-navigator title="Navigator" var="<%- navigator %>">
+<ons-navigator title="Navigator" var="<%- @navigator %>">
 	<% include 'models-index.html' %>
 	<% for modelName, modelDef of @models: %>
 		<% @generate 'view/list.html', "view/#{@detectModelPath(modelDef)}/list.html", @mergeEnv({model: modelDef}) %>

@@ -9,7 +9,7 @@ var DEST_ROOT = '../openfest/client/result/www/';
 var NAVIGATOR_NAME = 'myNavigator';
 var VIEW_ROOT = 'view';
 
-var renderer = ECT({ root: 'templates', ext: '.ect' });
+var renderer = ECT({ root: 'templates/onsenui', ext: '.ect' });
 var templateParams = {
 	navigator: NAVIGATOR_NAME,
 	viewRoot: VIEW_ROOT,
