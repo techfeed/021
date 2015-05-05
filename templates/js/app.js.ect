@@ -1,22 +1,58 @@
 (function() {
   angular
-    .module('app', [
-      'ui.router',
-      'lbServices'
-    ])
+    .module('app')
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
       function($stateProvider, $urlRouterProvider, $locationProvider) {
-        //$locationProvider.html5Mode(true);
-        <% for name, def of @models: %>
+        $locationProvider.html5Mode(true);
+        $urlRouterProvider.otherwise('');
+        $stateProvider
+          .state('index', {
+            url: '/',
+            onEnter: function($rootScope) {
+              console.log('index');
+            }
+          });
+        <% for name, modelDef of @models: %>
           $stateProvider
-            .state('<%= @detectModelPath def %>/list', {
-              url: '<%= @detectModelPath def %>/list',
-              controller: '<%= name %>ListController'
-            });
-          $stateProvider
-            .state('<%= @detectModelPath def %>/add', {
-              url: '<%= @detectModelPath def %>/add',
-              controller: '<%= name %>AddController'
+            .state('<%- @detectModelPath modelDef %>', {
+              abstract: true,
+              url: '<%- @detectModelPath modelDef %>',
+            })
+            .state('<%- @detectModelPath modelDef %>.list', {
+              url: '/list',
+              onEnter: function($rootScope) {
+                $rootScope.<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath modelDef}/list.html" %>');
+              },
+              onExit: function($rootScope) {
+                  $rootScope.<%= @navigator %>.popPage();
+              }
+            })
+            .state('<%- @detectModelPath modelDef %>.add', {
+              url: '/add',
+              onEnter: function($rootScope) {
+                $rootScope.<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath modelDef}/add.html" %>', { animation: 'lift' });
+              },
+              onExit: function($rootScope) {
+                  $rootScope.<%= @navigator %>.popPage();
+              }
+            })
+            .state('<%- @detectModelPath modelDef %>.detail', {
+              url: '/detail',
+              onEnter: function($rootScope) {
+                $rootScope.<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath modelDef}/detail.html" %>', { animation: 'slide' });
+              },
+              onExit: function($rootScope) {
+                  $rootScope.<%= @navigator %>.popPage();
+              }
+            })
+            .state('<%- @detectModelPath modelDef %>.edit', {
+              url: '/edit',
+              onEnter: function($rootScope) {
+                $rootScope.<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath modelDef}/edit.html" %>', { animation: 'lift' });
+              },
+              onExit: function($rootScope) {
+                  $rootScope.<%= @navigator %>.popPage();
+              }
             });
         <% end %>
       }])
@@ -31,7 +67,7 @@
 
   ons.ready(function() {
     <%= @navigator %>.on('prepop', function(event) {
-      
+
     });
   });
 })();

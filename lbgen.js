@@ -25,7 +25,7 @@ var templateParams = {
 };
 
 loadModelDefs();
-generate('template', 'index.html', {});
+generate('template.html', 'index.html', {});
 
 function loadModelDefs() {
 	var dirpath = '../openfest/common/models/';
@@ -55,7 +55,6 @@ function generate(template, dest, params) {
 	try {
 		mkdirp.sync(dirPath);
 	} catch (ignored) {
-		console.log(ignored)
 	}
 	var clone = _.clone(templateParams);
 	params = _.extend(clone, params);
