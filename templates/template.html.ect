@@ -1,0 +1,20 @@
+<% extend 'layout.html' %>
+
+<% navigator = 'myNavigator' %>
+
+<ons-navigator title="Navigator" var="<%- navigator %>">
+	<% include 'models-index.html' %>
+	<% for modelName, modelDef of @models: %>
+		<% @generate 'view/list.html', "view/#{@detectModelPath(modelDef)}/list.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/add.html', "view/#{@detectModelPath(modelDef)}/add.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/detail.html', "view/#{@detectModelPath(modelDef)}/detail.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'view/edit.html', "view/#{@detectModelPath(modelDef)}/edit.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
+	<% end %>
+</ons-navigator>
+
+<% block 'javascripts-footer': %>
+	<% for modelName, modelDef of @models: %>
+		<script src="<%= "js/controllers/#{modelName}.controller.js" %>"></script>
+	<% end %>
+<% end %>

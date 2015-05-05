@@ -1,0 +1,23 @@
+<ons-page>
+  <ons-toolbar>
+    <div class="left">
+    </div>
+    <div class="center">
+      All models
+    </div>
+  </ons-toolbar>
+  <ons-list>
+    <% for modelName, modelDef of @models: %>
+      <ons-list-item modifier="chevron">
+        <ons-row ui-sref="<%= @detectModelPath modelDef %>.list">
+          <ons-col width="30px">
+            <ons-icon icon="ion-folder" class="list-item-icon"></ons-icon>
+          </ons-col>
+          <ons-col>
+            <%- modelName %>
+          </ons-col>
+        </ons-row>
+      </ons-list-item>
+    <% end %>
+  </ons-list>
+</ons-page>

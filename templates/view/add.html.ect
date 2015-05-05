@@ -1,0 +1,16 @@
+<ons-page ng-controller="<%= @model.name %>AddController">
+  <ons-toolbar>
+    <div class="left">
+      <ons-toolbar-button onclick="<%- @navigator %>.popPage();">
+        Cancel
+      </ons-toolbar-button>
+    </div>
+    <div class="center">New <%- @model.name %></div>
+    <div class="right">
+      <ons-toolbar-button ng-click="save()">
+        Save
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+  <% include 'model-editor.html', @mergeEnv({model: @model}) %>
+</ons-page>
