@@ -1,7 +1,7 @@
 <ons-page ng-controller="<%= @model.name %>ListController">
   <ons-toolbar>
     <div class="left">
-      <ons-toolbar-button ui-sref="index">
+      <ons-toolbar-button onclick="<%= @navigator %>.popPage()">
         <ons-icon icon="ion-arrow-left-c" style="font-size: 28px;" fixed-width="false"></ons-icon>
       </ons-toolbar-button>
     </div>
@@ -11,7 +11,7 @@
     <div class="right">
       <ons-toolbar-button>
         <ons-icon icon="ion-plus" fixed-width="false" style="vertical-align: -4px;"
-          ui-sref="<%= @detectModelPath @model %>.add"></ons-icon>
+          onclick="<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath @model}/add.html" %>', {animation: 'lift'})"></ons-icon>
       </ons-toolbar-button>
     </div>
   </ons-toolbar>
