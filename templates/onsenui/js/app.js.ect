@@ -9,6 +9,7 @@
           prefix: '<%- @contextRoot %>/resources/messages_',
           suffix: '.json'
         })
-        .preferredLanguage('en');
+        .preferredLanguage('en')
+        .useSanitizeValueStrategy('escaped');
     }]);
 })();

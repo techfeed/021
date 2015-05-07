@@ -39,7 +39,7 @@ angular
     };
   }])
   .controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
-      '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
+    function($scope, <%= @model.name %>, $rootScope, $state) {
     $scope.save = function() {
       <% for name, def of @model.properties: %>
         var _<%= name %> = $scope.record.<%= name %>;
@@ -70,7 +70,7 @@ angular
     };
   }])
   .controller('<%= @model.name %>EditController', ['$scope', '<%= @model.name %>', '$rootScope',
-      '$state', function($scope, <%= @model.name %>, $rootScope, $state) {
+    function($scope, <%= @model.name %>, $rootScope, $state) {
     var page = <%- @navigator %>.getCurrentPage();
     var recordId = page.options.recordId;
     $scope.record = <%= @model.name %>.findById({id: recordId});

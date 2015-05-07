@@ -5,7 +5,7 @@
         <% when 'boolean': %>
           <ons-row>
             <ons-col>
-              <label class="list-item-label"><%= @s.capitalize(name) %></label>
+              <label class="list-item-label">{{'model.<%= @model.name %>.property.<%= name %>' | translate}}</label>
             </ons-col>
             <ons-col align="right">
               <ons-switch modifier="list-item" ng-model="record.<%= name %>"></ons-switch>
@@ -14,12 +14,12 @@
         <% end %>
         <% when 'string': %>
           <input type="text" class="text-input text-input--transparent width-full"
-            placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+            placeholder="{{'model.<%= @model.name %>.property.<%= name %>' | translate}}" <% 'required' if def.required %>
             ng-model="record.<%= name %>">
         <% end %>
         <% when 'number': %>
           <input type="text" class="text-input text-input--transparent width-full"
-            placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+            placeholder="{{'model.<%= @model.name %>.property.<%= name %>' | translate}}" <% 'required' if def.required %>
             ng-model="record.<%= name %>">
         <% end %>
         <% when 'date': %>
@@ -29,7 +29,7 @@
             </ons-col>
             <ons-col>
               <input type="text" class="text-input text-input--transparent width-full"
-                placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                placeholder="{{'model.<%= @model.name %>.property.<%= name %>' | translate}}" <% 'required' if def.required %>
                 ng-model="record.<%= name %>">
             </ons-col>
           </ons-row>
@@ -41,7 +41,7 @@
             </ons-col>
             <ons-col>
               <input type="text" class="text-input text-input--transparent width-full"
-                placeholder="<%= @s.capitalize(name) %>" <% 'required' if def.required %>
+                placeholder="{{'model.<%= @model.name %>.property.<%= name %>' | translate}}" <% 'required' if def.required %>
                 ng-model="record.<%= name %>">
             </ons-col>
           </ons-row>
