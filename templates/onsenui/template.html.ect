@@ -12,6 +12,10 @@
 </ons-navigator>
 
 <% block 'javascripts-footer': %>
+
+	<% @generate 'js/app.js', 'js/app.js', {} %>
+	<script src="js/app.js"></script>
+
 	<% for modelName, modelDef of @models: %>
 		<script src="<%= "js/controllers/#{modelName}.controller.js" %>"></script>
 	<% end %>
