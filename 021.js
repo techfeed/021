@@ -5,7 +5,7 @@ var _ = require('underscore');
 var s = require('underscore.string');
 
 
-var DEST_ROOT = '../openfest/client/result/www/';
+var DEST_ROOT = '../openfest/client/onsenui/www/';
 var NAVIGATOR_NAME = 'myNavigator';
 var VIEW_ROOT = 'view';
 
@@ -13,7 +13,7 @@ var renderer = ECT({ root: 'templates/onsenui', ext: '.ect' });
 var templateParams = {
 	navigator: NAVIGATOR_NAME,
 	viewRoot: VIEW_ROOT,
-	contextRoot: '/result/www',
+	contextRoot: '/onsenui/www',
 	detectModelPath: detectModelPath,
 	generate: generate,
 	_: _,

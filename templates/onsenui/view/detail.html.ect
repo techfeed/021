@@ -21,7 +21,14 @@
             <label class="list-item-label">{{'model.<%= @model.name %>.property.<%= name %>' | translate}}</label>
           </ons-col>
           <ons-col align="right">
-            {{record.<%= name %>}}
+            <% switch def.type: %>
+              <% when 'date': %>
+                {{record.<%= name %> | date: 'medium'}}
+              <% end %>
+              <% else: %>
+                {{record.<%= name %>}}
+              <% end %>
+            <% end %>
           </ons-col>
         </ons-row>
       </ons-list-item>
