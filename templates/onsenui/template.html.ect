@@ -11,8 +11,9 @@
 	<% end %>
 </ons-navigator>
 
-<% block 'javascripts-footer': %>
+<% @generate 'resources/messages_en.json', "resources/messages_en.json", @mergeEnv({models: @models}) %>
 
+<% block 'javascripts-footer': %>
 	<% @generate 'js/app.js', 'js/app.js', {} %>
 	<script src="js/app.js"></script>
 

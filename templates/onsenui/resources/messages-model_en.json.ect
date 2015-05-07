@@ -1,0 +1,14 @@
+"model": {
+  <% for modelName, model of @models: %>
+    "<%= modelName %>": {
+      "name": "<%= modelName %>",
+      "property": {
+        <% for propName, p of model.properties: %>
+          "<%= propName %>": "<%= propName %>",
+        <% end %>
+        "__dummy": ""
+      }
+    },
+  <% end %>
+  "__dummy": ""
+}

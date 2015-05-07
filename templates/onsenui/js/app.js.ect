@@ -1,3 +1,14 @@
 (function() {
-  ons.bootstrap('app', ['ui.router', 'lbServices']);
+  ons.bootstrap('app', ['pascalprecht.translate', 'lbServices']);
+  angular
+    .module('app')
+    .config(['$translateProvider', function ($translateProvider) {
+      // add translation table
+      $translateProvider
+        .useStaticFilesLoader({
+          prefix: '<%- @contextRoot %>/resources/messages_',
+          suffix: '.json'
+        })
+        .preferredLanguage('en');
+    }]);
 })();
