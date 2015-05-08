@@ -33,16 +33,52 @@ loadModelDefs();
 generate('template.html', 'index.html', {});
 
 function loadModelDefs() {
-	var dirpath = cmdDir + '/../openfest/common/models/';
-	var modelFiles = fs.readdirSync(dirpath).filter(function(path) {
+	//var dirpath = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/common/models/';
+	var appDir = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest';
+	var appServerDir = appDir + '/server';
+	var modelConfigPath = appServerDir + '/model-config.json';
+	var modelConfig = JSON.parse(fs.readFileSync(modelConfigPath));
+	var modelMeta = modelConfig._meta;
+	var sourcePaths = modelMeta.sources;
+	var modelFilePaths = [];
+	var jsonPathFilter = function(path) {
 		return /\.json$/.test(path);
+	};
+	sourcePaths.forEach(function(sourcePath) {
+		var dirPath, jsonFilePaths;
+		try {
+			if (s.startsWith(sourcePath, 'loopback/')) {
+				dirPath = appDir + '/node_modules/' + sourcePath;
+			} else {
+				dirPath = appServerDir + '/' + sourcePath;
+			}
+			jsonFilePaths = fs
+					.readdirSync(dirPath)
+					.filter(jsonPathFilter)
+					.map(function(jsonFileName) {
+						return dirPath + '/' + jsonFileName;
+					});
+		} catch (e) {
+			console.log(dirPath + ' is not exists.');
+			return;
+		}
+		modelFilePaths = modelFilePaths.concat(jsonFilePaths)
 	});
-	var modelDefs = {};
-	modelFiles.forEach(function(fileName) {
-		var json = fs.readFileSync(dirpath + fileName);
+	var modelDefs = {}, modelDefsTmp = {};
+	modelFilePaths.forEach(function(path) {
+		var json = fs.readFileSync(path);
 		var modelObj = JSON.parse(json);
-		modelDefs[modelObj.name] = modelObj;
+		modelDefsTmp[modelObj.name] = modelObj;
 	});
+	for (var modelName in modelConfig) {
+		if (modelName === '_meta') {
+			continue;
+		}
+		var model = modelConfig[modelName];
+		if (model.public !== false) {
+			modelDefs[modelName] = modelDefsTmp[modelName];
+		}
+	}
 	templateParams.models = modelDefs;
 }
 
@@ -65,16 +101,7 @@ function generate(template, dest, params) {
 	params = _.extend(clone, params);
 
 	var text = renderer.render(template, params);
-
-	var fd = -1;
-	try {
-//		fd = fs.openSync(filePath, 'w');
-		fs.writeFileSync(filePath, text);
-	} finally {
-//		if (fd >= 0) {
-//			fs.closeSync(fd);
-//		}
-	}
+	fs.writeFileSync(filePath, text);
 }
 
 function detectModelPath(model) {
