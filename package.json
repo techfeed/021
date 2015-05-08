@@ -6,7 +6,8 @@
     "ect": "^0.5.9",
     "underscore": "^1.8.3",
     "underscore.string": "^3.0.3",
-    "mkdirp": "^0.5.0"
+    "mkdirp": "^0.5.0",
+    "gulp": "^3.8.11"
   },
   "optionalDependencies": {},
   "devDependencies": {},

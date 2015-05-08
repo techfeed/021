@@ -4,16 +4,21 @@ var mkdirp = require('mkdirp');
 var _ = require('underscore');
 var s = require('underscore.string');
 
+var cmdDir = __dirname;
 
-var DEST_ROOT = '../openfest/client/onsenui/www/';
+var DEST_ROOT = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/client/onsenui/www/';
+
 var NAVIGATOR_NAME = 'myNavigator';
 var VIEW_ROOT = 'view';
 
-var renderer = ECT({ root: 'templates/onsenui', ext: '.ect' });
+process.chdir('templates/onsenui');
+
+var renderer = ECT({ root: '.', ext: '.ect' });
 var templateParams = {
 	navigator: NAVIGATOR_NAME,
 	viewRoot: VIEW_ROOT,
 	contextRoot: '/onsenui/www',
+	destDir: DEST_ROOT,
 	detectModelPath: detectModelPath,
 	generate: generate,
 	_: _,
@@ -28,7 +33,7 @@ loadModelDefs();
 generate('template.html', 'index.html', {});
 
 function loadModelDefs() {
-	var dirpath = '../openfest/common/models/';
+	var dirpath = cmdDir + '/../openfest/common/models/';
 	var modelFiles = fs.readdirSync(dirpath).filter(function(path) {
 		return /\.json$/.test(path);
 	});
