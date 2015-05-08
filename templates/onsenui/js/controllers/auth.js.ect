@@ -1,0 +1,18 @@
+angular
+  .module('app')
+  .controller('LoginController', ['$scope', 'User', function($scope, User) {
+    $scope.login = function() {
+      <%- @navigator %>.pushPage(
+        '<%- "#{@contextRoot}/models-index.html" %>', { animation : 'lift' } );
+    };
+    $scope.signup = function() {
+      <%- @navigator %>.pushPage(
+        '<%- "#{@contextRoot}/signup.html" %>', { animation : 'lift' } );
+    };
+  }])
+  .controller('SignupController', ['$scope', 'User', function($scope, User) {
+    $scope.signup = function() {
+      <%- @navigator %>.pushPage(
+        '<%- "#{@contextRoot}/models-index.html" %>', { animation : 'lift' } );
+    };
+  }]);
