@@ -4,7 +4,7 @@ angular
     <%= @model.name %>) {
     $scope.records = <%= @model.name %>.find();
     $scope.showDetail = function(id) {
-      <%- @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath @model}/detail.html" %>', { animation : 'slide', recordId: id } );
+      <%- @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@model.name}/detail.html" %>', { animation : 'slide', recordId: id } );
     };
   }])
   .controller('<%= @model.name %>DetailController', ['$scope', '<%= @model.name %>', function($scope,
@@ -14,7 +14,7 @@ angular
     $scope.record = <%= @model.name %>.findById({id: recordId});
 
     $scope.edit = function() {
-      <%- @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath @model}/edit.html" %>', { animation : 'lift', recordId: recordId } );
+      <%- @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@model.name}/edit.html" %>', { animation : 'lift', recordId: recordId } );
     };
 
     $scope.remove = function() {

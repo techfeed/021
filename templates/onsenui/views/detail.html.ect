@@ -33,6 +33,12 @@
         </ons-row>
       </ons-list-item>
     <% end %>
+    <% for relName, relDef of @model.relations: %>
+      <ons-list-item modifier="chevron"
+        onclick="<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{relDef.model}/list.html" %>', {animation: 'slide'})">
+        {{'model.<%= @model.name %>.relation.<%= relName %>' | translate}}
+      </ons-list-item>
+    <% end %>
   </ons-list>
   <ons-button modifier="large--quiet" ng-click="remove()">{{'common.delete' | translate}}</ons-button>
 </ons-page>

@@ -9,7 +9,7 @@
   <ons-list>
     <% for modelName, modelDef of @models: %>
       <ons-list-item modifier="chevron">
-        <ons-row onclick="<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@detectModelPath modelDef}/list.html" %>')">
+        <ons-row onclick="<%= @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{modelName}/list.html" %>')">
           <ons-col width="30px">
             <ons-icon icon="ion-folder" class="list-item-icon"></ons-icon>
           </ons-col>

@@ -7,6 +7,12 @@
           "<%= propName %>": "<%= propName %>",
         <% end %>
         "__dummy": ""
+      },
+      "relation": {
+        <% for relName, relDef of model.relations: %>
+          "<%= relName %>": "<%= relName %>",
+        <% end %>
+        "__dummy": ""
       }
     },
   <% end %>

@@ -22,7 +22,6 @@ var templateParams = {
 	viewRoot: VIEW_ROOT,
 	contextRoot: '/onsenui/www',
 	destDir: DEST_ROOT,
-	detectModelPath: detectModelPath,
 	generate: generate,
 	_: _,
 	s: s,
@@ -117,12 +116,4 @@ function generate(template, dest, params) {
 			break;
 	}
 	fs.writeFileSync(filePath, text);
-}
-
-function detectModelPath(model) {
-	if (model.plural) {
-		return model.plural;
-	}
-	var modelName = model.name.toLowerCase();
-	return modelName + 's';
 }
