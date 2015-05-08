@@ -3,6 +3,9 @@ var ECT = require('ect');
 var mkdirp = require('mkdirp');
 var _ = require('underscore');
 var s = require('underscore.string');
+var beautify_js = require('js-beautify'); // also available under "js" export
+var beautify_css = require('js-beautify').css;
+var beautify_html = require('js-beautify').html;
 
 var cmdDir = __dirname;
 
@@ -101,6 +104,18 @@ function generate(template, dest, params) {
 	params = _.extend(clone, params);
 
 	var text = renderer.render(template, params);
+	var extension = filePath.substring(filePath.lastIndexOf('.') + 1);
+	switch (extension) {
+		case 'js': case 'json':
+			text = beautify_js(text, { indent_size: 2 });
+			break;
+		case 'css': case 'less': case 'scss':
+			text = beautify_css(text, { indent_size: 2 });
+			break;
+		case 'html':
+			text = beautify_html(text, { indent_size: 2 });
+			break;
+	}
 	fs.writeFileSync(filePath, text);
 }
 

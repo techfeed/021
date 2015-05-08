@@ -17,19 +17,13 @@
 		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
 	<% end %>
 </ons-navigator>
-
 <% @generate 'resources/messages_en.json', "resources/messages_en.json", @mergeEnv({models: @models}) %>
-
-<%
-	gulp.src('css/**/*.css').pipe(gulp.dest(@destDir + '/css/'));
-%>
+<% gulp.src('css/**/*.css').pipe(gulp.dest(@destDir + '/css/')); %>
 <% block 'javascripts-footer': %>
 	<% @generate 'js/app.js', 'js/app.js', {} %>
 	<script src="js/app.js"></script>
-
 	<% @generate 'js/controllers/auth.js', 'js/controllers/auth.js', {} %>
 	<script src="js/controllers/auth.js"></script>
-
 	<% for modelName, modelDef of @models: %>
 		<script src="<%= "js/controllers/#{modelName}.controller.js" %>"></script>
 	<% end %>
