@@ -9,7 +9,7 @@ var cmdDir = __dirname;
 var DEST_ROOT = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/client/onsenui/www/';
 
 var NAVIGATOR_NAME = 'myNavigator';
-var VIEW_ROOT = 'view';
+var VIEW_ROOT = 'views';
 
 process.chdir('templates/onsenui');
 

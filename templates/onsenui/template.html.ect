@@ -10,10 +10,10 @@
 	<% @generate 'signup.html', 'signup.html', @mergeEnv({model: modelDef}) %>
 	<% @generate 'models-index.html', 'models-index.html', @mergeEnv({model: modelDef}) %>
 	<% for modelName, modelDef of @models: %>
-		<% @generate 'view/list.html', "view/#{@detectModelPath(modelDef)}/list.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'view/add.html', "view/#{@detectModelPath(modelDef)}/add.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'view/detail.html', "view/#{@detectModelPath(modelDef)}/detail.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'view/edit.html', "view/#{@detectModelPath(modelDef)}/edit.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'views/list.html', "views/#{@detectModelPath(modelDef)}/list.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'views/add.html', "views/#{@detectModelPath(modelDef)}/add.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'views/detail.html', "views/#{@detectModelPath(modelDef)}/detail.html", @mergeEnv({model: modelDef}) %>
+		<% @generate 'views/edit.html', "views/#{@detectModelPath(modelDef)}/edit.html", @mergeEnv({model: modelDef}) %>
 		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
 	<% end %>
 </ons-navigator>
