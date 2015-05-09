@@ -1,13 +1,21 @@
-angular
-  .module('app')
-  .controller('<%= @model.name %>ListController', ['$scope', '<%= @model.name %>', function($scope,
+(function() {
+  var app = angular.module('app');
+
+  app.controller('<%= @model.name %>ListController', ['$scope', '<%= @model.name %>', function($scope,
     <%= @model.name %>) {
-    $scope.records = <%= @model.name %>.find();
+
+    var page = <%- @navigator %>.getCurrentPage();
+    var whereCond = page.options.where;
+    var where = undefined;
+    if (whereCond) {
+      where = { where: whereCond };
+    }
+    $scope.records = <%= @model.name %>.find(where);
     $scope.showDetail = function(id) {
       <%- @navigator %>.pushPage('<%- "#{@contextRoot}/#{@viewRoot}/#{@model.name}/detail.html" %>', { animation : 'slide', recordId: id } );
     };
-  }])
-  .controller('<%= @model.name %>DetailController', ['$scope', '<%= @model.name %>', function($scope,
+  }]);
+  app.controller('<%= @model.name %>DetailController', ['$scope', '<%= @model.name %>', function($scope,
     <%= @model.name %>) {
     var page = <%- @navigator %>.getCurrentPage();
     var recordId = page.options.recordId;
@@ -37,8 +45,8 @@ angular
         }
       });
     };
-  }])
-  .controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
+  }]);
+  app.controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope',
     function($scope, <%= @model.name %>, $rootScope, $state) {
     $scope.save = function() {
       <% for name, def of @model.properties: %>
@@ -69,7 +77,7 @@ angular
         });
     };
   }])
-  .controller('<%= @model.name %>EditController', ['$scope', '<%= @model.name %>', '$rootScope',
+  app.controller('<%= @model.name %>EditController', ['$scope', '<%= @model.name %>', '$rootScope',
     function($scope, <%= @model.name %>, $rootScope, $state) {
     var page = <%- @navigator %>.getCurrentPage();
     var recordId = page.options.recordId;
@@ -106,3 +114,4 @@ angular
         });
     };
   }]);
+})();

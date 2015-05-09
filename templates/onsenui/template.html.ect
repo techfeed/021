@@ -5,10 +5,10 @@
 	<link rel="stylesheet" href="css/style.css" charset="utf-8">
 <% end %>
 
-<ons-navigator title="Navigator" var="<%- @navigator %>" page="login.html">
-	<% @generate 'login.html', 'login.html', @mergeEnv({model: modelDef}) %>
-	<% @generate 'signup.html', 'signup.html', @mergeEnv({model: modelDef}) %>
-	<% @generate 'models-index.html', 'models-index.html', @mergeEnv({model: modelDef}) %>
+<div ui-view>
+	<% @generate 'views/login.html', 'views/login.html' %>
+	<% @generate 'views/signup.html', 'views/signup.html' %>
+	<% @generate 'views/index.html', 'views/index.html' %>
 	<% for modelName, modelDef of @models: %>
 		<% @generate 'views/list.html', "views/#{modelName}/list.html", @mergeEnv({model: modelDef}) %>
 		<% @generate 'views/add.html', "views/#{modelName}/add.html", @mergeEnv({model: modelDef}) %>
@@ -16,9 +16,12 @@
 		<% @generate 'views/edit.html', "views/#{modelName}/edit.html", @mergeEnv({model: modelDef}) %>
 		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
 	<% end %>
-</ons-navigator>
+</div>
 <% @generate 'resources/messages_en.json', "resources/messages_en.json", @mergeEnv({models: @models}) %>
 <% gulp.src('css/**/*.css').pipe(gulp.dest(@destDir + '/css/')); %>
+<% gulp.src('js/**/*.js').pipe(gulp.dest(@destDir + '/js/')); %>
+<% gulp.src('bower.json').pipe(gulp.dest(@destDir)); %>
+
 <% block 'javascripts-footer': %>
 	<% @generate 'js/app.js', 'js/app.js', {} %>
 	<script src="js/app.js"></script>

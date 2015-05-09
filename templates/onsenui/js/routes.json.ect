@@ -1,0 +1,52 @@
+{
+  "login": {
+    "url": "/login",
+    "templateUrl": "views/login.html",
+    "controller": "LoginController"
+  },
+  "logout": {
+    "url": "/logout",
+    "controller": "LogoutController"
+  },
+  "sign-up": {
+    "url": "/signup",
+    "templateUrl": "views/sign-up.html",
+    "controller": "SignUpController"
+  },
+  "index": {
+    "url": "/index",
+    "templateUrl": "views/index.html"
+  },
+  <% for modelName, model of @models: %>
+    "<%= modelName %>": {
+      "url": "/<%= modelName %>",
+      "abstract": true
+    },
+    "<%= modelName %>.list": {
+      "url": "/list",
+      "templateUrl": "views/<%= modelName %>/list.html",
+      "controller": "<%= modelName %>ListController"
+    },
+    "<%= modelName %>.add": {
+        "url": "/add",
+        "templateUrl": "views/<%= modelName %>/add.html",
+        "controller": "<%= modelName %>AddController"
+    },
+    "<%= modelName %>.edit": {
+        "url": "/:recordId/edit",
+        "templateUrl": "views/<%= modelName %>/edit.html",
+        "controller": "<%= modelName %>EditController"
+    },
+    "<%= modelName %>.detail": {
+      "url": "/:recordId/detail",
+      "templateUrl": "views/<%= modelName %>/detail.html",
+      "controller": "<%= modelName %>DetailController"
+    },
+    "<%= modelName %>.delete": {
+      "url": "/delete",
+      "templateUrl": "views/<%= modelName %>/delete.html",
+      "controller": "<%= modelName %>DeleteController"
+    },
+  <% end %>
+  "": {}
+}

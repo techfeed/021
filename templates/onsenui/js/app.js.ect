@@ -1,5 +1,5 @@
 (function() {
-  ons.bootstrap('app', ['pascalprecht.translate', 'lbServices']);
+  ons.bootstrap('app', ['pascalprecht.translate', 'ui.router', 'lbServices']);
   angular
     .module('app')
     .config(['$translateProvider', function ($translateProvider) {
@@ -11,5 +11,26 @@
         })
         .preferredLanguage('en')
         .useSanitizeValueStrategy('escaped');
+    }])
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+      function($stateProvider, $urlRouterProvider, $locationProvider) {
+      $locationProvider.html5Mode(true);
+      $urlRouterProvider.otherwise('/login');
+
+      var routes = <% include 'js/routes.json' %>;
+      for (var stateName in routes) {
+        if (stateName !== "")
+          $stateProvider.state(stateName, routes[stateName]);
+      }
+      <% @generate 'js/routes.json', 'js/routes.json' %>
+    }])
+    .run(['$rootScope', '$state', function($rootScope, $state) {
+      $rootScope.$on('$stateChangeStart', function(event, next) {
+        // redirect to login page if not logged in
+        if (next.authenticate && !$rootScope.currentUser) {
+          event.preventDefault(); //prevent current page from loading
+          $state.go('forbidden');
+        }
+      });
     }]);
 })();
