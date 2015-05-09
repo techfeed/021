@@ -17,12 +17,12 @@
       $locationProvider.html5Mode(true);
       $urlRouterProvider.otherwise('/login');
 
-      var routes = <% include 'js/routes.json' %>;
+      var routes = <% include 'js/view-states.json' %>;
       for (var stateName in routes) {
         if (stateName !== "")
           $stateProvider.state(stateName, routes[stateName]);
       }
-      <% @generate 'js/routes.json', 'js/routes.json' %>
+      <% @generate 'js/view-states.json', 'js/view-states.json' %>
     }])
     .run(['$rootScope', '$state', function($rootScope, $state) {
       $rootScope.$on('$stateChangeStart', function(event, next) {

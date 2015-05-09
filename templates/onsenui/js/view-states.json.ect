@@ -20,6 +20,7 @@
   <% for modelName, model of @models: %>
     "<%= modelName %>": {
       "url": "/<%= modelName %>",
+      "template": "<ui-view/>",
       "abstract": true
     },
     "<%= modelName %>.list": {
@@ -33,17 +34,17 @@
         "controller": "<%= modelName %>AddController"
     },
     "<%= modelName %>.edit": {
-        "url": "/:recordId/edit",
+        "url": "/:id/edit",
         "templateUrl": "views/<%= modelName %>/edit.html",
         "controller": "<%= modelName %>EditController"
     },
     "<%= modelName %>.detail": {
-      "url": "/:recordId/detail",
+      "url": "/:id/detail",
       "templateUrl": "views/<%= modelName %>/detail.html",
       "controller": "<%= modelName %>DetailController"
     },
     "<%= modelName %>.delete": {
-      "url": "/delete",
+      "url": "/:id/delete",
       "templateUrl": "views/<%= modelName %>/delete.html",
       "controller": "<%= modelName %>DeleteController"
     },

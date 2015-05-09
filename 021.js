@@ -11,14 +11,12 @@ var cmdDir = __dirname;
 
 var DEST_ROOT = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/client/onsenui/www/';
 
-var NAVIGATOR_NAME = 'myNavigator';
 var VIEW_ROOT = 'views';
 
 process.chdir('templates/onsenui');
 
 var renderer = ECT({ root: '.', ext: '.ect' });
 var templateParams = {
-	navigator: NAVIGATOR_NAME,
 	viewRoot: VIEW_ROOT,
 	contextRoot: '/onsenui/www',
 	destDir: DEST_ROOT,
