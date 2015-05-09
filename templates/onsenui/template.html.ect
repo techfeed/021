@@ -14,7 +14,10 @@
 		<% @generate 'views/add.html', "views/#{modelName}/add.html", @mergeEnv({model: modelDef}) %>
 		<% @generate 'views/detail.html', "views/#{modelName}/detail.html", @mergeEnv({model: modelDef}) %>
 		<% @generate 'views/edit.html', "views/#{modelName}/edit.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'js/controllers/controller.js', "js/controllers/#{modelName}.controller.js", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/list.controller.js', "js/controllers/#{modelName}/list.js", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/add.controller.js', "js/controllers/#{modelName}/add.js", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/detail.controller.js', "js/controllers/#{modelName}/detail.js", @mergeEnv({model: modelDef}) %>
+		<% @generate 'js/controllers/edit.controller.js', "js/controllers/#{modelName}/edit.js", @mergeEnv({model: modelDef}) %>
 	<% end %>
 </div>
 <% @generate 'resources/messages_en.json', "resources/messages_en.json", @mergeEnv({models: @models}) %>
@@ -28,6 +31,9 @@
 	<% @generate 'js/controllers/auth.js', 'js/controllers/auth.js', {} %>
 	<script src="js/controllers/auth.js"></script>
 	<% for modelName, modelDef of @models: %>
-		<script src="<%= "js/controllers/#{modelName}.controller.js" %>"></script>
+		<script src="<%= "js/controllers/#{modelName}/list.js" %>"></script>
+		<script src="<%= "js/controllers/#{modelName}/add.js" %>"></script>
+		<script src="<%= "js/controllers/#{modelName}/detail.js" %>"></script>
+		<script src="<%= "js/controllers/#{modelName}/edit.js" %>"></script>
 	<% end %>
 <% end %>

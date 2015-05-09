@@ -1,0 +1,34 @@
+(function() {
+  var app = angular.module('app');
+  app.controller('<%= @model.name %>AddController', ['$scope', '<%= @model.name %>', '$rootScope', '$state',
+    function($scope, <%= @model.name %>, $rootScope, $state) {
+    $scope.save = function() {
+      <% for name, def of @model.properties: %>
+        var _<%= name %> = $scope.record.<%= name %>;
+        <% switch def.type: %>
+          <% when 'number': %>
+            _<%= name %> = Number(_<%= name %>);
+          <% end %>
+          <% when 'date': %>
+            _<%= name %> = new Date(_<%= name %>).toISOString();
+          <% end %>
+          <% when 'boolean': %>
+            _<%= name %> = !!_<%= name %>;
+          <% end %>
+        <% end %>
+      <% end %>
+
+      var requestParams = {};
+      <% for name, def of @model.properties: %>
+        requestParams['<%= name %>'] = _<%= name %>;
+      <% end %>
+
+      <%= @model.name %>
+        .create(requestParams)
+        .$promise
+        .then(function(record) {
+          $state.go('<%= @model.name %>.detail', { id: record.id });
+        });
+    };
+  }]);
+})();
