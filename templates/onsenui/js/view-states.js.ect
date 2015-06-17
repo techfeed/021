@@ -1,0 +1,79 @@
+(function(_global) {
+  var viewStates = {
+    "login": {
+      "url": "/login",
+      "templateUrl": "views/login.html",
+      "controller": "LoginController"
+    },
+    "logout": {
+      "url": "/logout",
+      "controller": "LogoutController"
+    },
+    "signup": {
+      "url": "/signup",
+      "templateUrl": "views/signup.html",
+      "controller": "SignUpController"
+    },
+    "index": {
+      "url": "/index",
+      "templateUrl": "views/index.html"
+    },
+    "settings": {
+      "url": "/settings",
+      "templateUrl": "views/settings.html"
+    },
+    <% for modelName, model of @models: %>
+      "<%= modelName %>": {
+        "url": "/<%= modelName %>",
+        "template": "<ui-view/>",
+        "abstract": true
+      },
+      "<%= modelName %>.list": {
+        "url": "/list",
+        "templateUrl": "views/<%= modelName %>/list.html",
+        "controller": "<%= modelName %>ListController"
+      },
+      "<%= modelName %>.add": {
+          "url": "/add",
+          "templateUrl": "views/<%= modelName %>/add.html",
+          "controller": "<%= modelName %>AddController"
+      },
+      "<%= modelName %>.detail": {
+        "url": "/:id",
+        "templateUrl": "views/<%= modelName %>/detail.html",
+        "controller": "<%= modelName %>DetailController"
+      },
+      "<%= modelName %>.edit": {
+          "url": "/:id/edit",
+          "templateUrl": "views/<%= modelName %>/edit.html",
+          "controller": "<%= modelName %>EditController"
+      },
+      "<%= modelName %>.delete": {
+        "url": "/:id/delete",
+        "templateUrl": "views/<%= modelName %>/delete.html",
+        "controller": "<%= modelName %>DeleteController"
+      },
+      <% ### %>
+      <% for relName, relDef of model.relations: %>
+        "<%= modelName %>.detail.<%= relName %>": {
+          "url": "/<%= relName %>",
+          "templateUrl": "views/<%= modelName %>/relation/<%= relName %>/detail.html",
+          "controller": "<%= modelName %>RelationDetailController_<%= relName %>"
+        },
+        "<%= modelName %>.relation.<%= relName %>": {
+          "url": "/:id/relation/<%= relName %>",
+          "templateUrl": "views/<%= modelName %>/relation/<%= relName %>/list.html",
+          "controller": "<%= modelName %>RelationController_<%= relName %>"
+        },
+      <% end %>
+      <% ### %>
+    <% end %>
+    "": {}
+  };
+
+  if (_global.window) {
+    _global.window.__viewStates = viewStates;
+  } else {
+    module.exports = viewStates;
+  }
+})(this);

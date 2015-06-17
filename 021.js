@@ -9,7 +9,7 @@ var beautify_html = require('js-beautify').html;
 
 var cmdDir = __dirname;
 
-var DEST_ROOT = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/client/onsenui/www/';
+var DEST_ROOT = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/suzu/client/www/';
 
 var VIEW_ROOT = 'views';
 
@@ -18,7 +18,7 @@ process.chdir('templates/onsenui');
 var renderer = ECT({ root: '.', ext: '.ect' });
 var templateParams = {
 	viewRoot: VIEW_ROOT,
-	contextRoot: '/onsenui/www',
+	contextRoot: '',
 	destDir: DEST_ROOT,
 	generate: generate,
 	_: _,
@@ -34,7 +34,7 @@ generate('template.html', 'index.html', {});
 
 function loadModelDefs() {
 	//var dirpath = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest/common/models/';
-	var appDir = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/openfest';
+	var appDir = cmdDir.substring(0, cmdDir.lastIndexOf('/')) + '/suzu';
 	var appServerDir = appDir + '/server';
 	var modelConfigPath = appServerDir + '/model-config.json';
 	var modelConfig = JSON.parse(fs.readFileSync(modelConfigPath));

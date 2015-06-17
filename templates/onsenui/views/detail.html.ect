@@ -33,11 +33,16 @@
         </ons-row>
       </ons-list-item>
     <% end %>
+    <% ### %>
     <% for relName, relDef of @model.relations: %>
+      <% @generate 'views/list.html', "views/#{modelName}/relation/#{relName}/list.html", @mergeEnv({model: modelDef}) %>
+    	<% @generate 'js/controllers/list.controller.js', "js/controllers/#{modelName}/list.js", @mergeEnv({model: modelDef}) %>
+      <% @generate '', 'views/<%= modelName %>/relation/<%= relName %>.html', {} %>
       <ons-list-item modifier="chevron">
         {{'model.<%= @model.name %>.relation.<%= relName %>' | translate}}
       </ons-list-item>
     <% end %>
+    <% ### %>
   </ons-list>
   <ons-button modifier="large--quiet" ng-click="remove()">{{'common.delete' | translate}}</ons-button>
 </ons-page>

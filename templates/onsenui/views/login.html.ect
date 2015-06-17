@@ -1,6 +1,3 @@
-<script>
-  alert('a');
-</script>
 <ons-page>
   <ons-toolbar>
     <div class="center">{{'common.login' | translate}}</div>
@@ -15,12 +12,16 @@
     </ons-button>
 
     <hr>
-    <input type="email" class="text-input--underbar" placeholder="Email" value="">
-    <input type="password" class="text-input--underbar" placeholder="Password" value="">
-    <br><br>
-    <ons-button modifier="large" class="login-button" ui-sref="index">{{'common.login' | translate}}</ons-button>
-    <br><br>
-    <ons-button modifier="quiet" class="forgot-password">Forgot password?</ons-button>
-    <ons-button modifier="quiet" class="forgot-password" ui-sref="signup">{{'common.signup' | translate}}</ons-button>
+    <form name="form">
+      <input type="text" class="text-input--underbar" ng-model="person.email" placeholder="Email" value="">
+      <input type="password" class="text-input--underbar" ng-model="person.password" placeholder="Password" value="">
+      <br>
+      <br>
+      <ons-button modifier="large" class="login-button" ui-sref="index" ng-click="login()">{{'common.login' | translate}}</ons-button>
+      <br>
+      <br>
+      <ons-button modifier="quiet" class="forgot-password">Forgot password?</ons-button>
+      <ons-button modifier="quiet" class="forgot-password" ui-sref="signup">{{'common.signup' | translate}}</ons-button>
+    </form>
   </div>
 </ons-page>

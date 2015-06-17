@@ -4,22 +4,45 @@
 <% block 'stylesheets-header': %>
 	<link rel="stylesheet" href="css/style.css" charset="utf-8">
 <% end %>
+<% ### %>
+<ons-sliding-menu side="left" var="leftMenu" close-on-tap>
+  <div class="menu">
+    <ons-page>
+			<ons-list>
+				<ons-list-item modifier="chevron" onclick="leftMenu.setMainPage('views/settings.html', {closeMenu: true})">
+					Settings
+				</ons-list-item>
+				<ons-list-item modifier="chevron" onclick="leftMenu.setMainPage('page2.html', {closeMenu: true})">
+					About
+				</ons-list-item>
+			</ons-list>
+	  </ons-page>
+  </div>
+  <div class="main">
+		<div ui-view></div>
+  </div>
+</ons-sliding-menu>
+<% ### %>
 
-<div ui-view>
-	<% @generate 'views/login.html', 'views/login.html' %>
-	<% @generate 'views/signup.html', 'views/signup.html' %>
-	<% @generate 'views/index.html', 'views/index.html' %>
-	<% for modelName, modelDef of @models: %>
-		<% @generate 'views/list.html', "views/#{modelName}/list.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'views/add.html', "views/#{modelName}/add.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'views/detail.html', "views/#{modelName}/detail.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'views/edit.html', "views/#{modelName}/edit.html", @mergeEnv({model: modelDef}) %>
-		<% @generate 'js/controllers/list.controller.js', "js/controllers/#{modelName}/list.js", @mergeEnv({model: modelDef}) %>
-		<% @generate 'js/controllers/add.controller.js', "js/controllers/#{modelName}/add.js", @mergeEnv({model: modelDef}) %>
-		<% @generate 'js/controllers/detail.controller.js', "js/controllers/#{modelName}/detail.js", @mergeEnv({model: modelDef}) %>
-		<% @generate 'js/controllers/edit.controller.js', "js/controllers/#{modelName}/edit.js", @mergeEnv({model: modelDef}) %>
-	<% end %>
-</div>
+<div ui-view></div>
+
+<% @generate 'views/login.html', 'views/login.html' %>
+<% @generate 'views/signup.html', 'views/signup.html' %>
+<% @generate 'views/index.html', 'views/index.html' %>
+<% ### %>
+<% @generate 'views/settings.html', 'views/settings.html' %>
+<% ### %>
+<% for modelName, modelDef of @models: %>
+	<% @generate 'views/list.html', "views/#{modelName}/list.html", @mergeEnv({model: modelDef}) %>
+	<% @generate 'views/add.html', "views/#{modelName}/add.html", @mergeEnv({model: modelDef}) %>
+	<% @generate 'views/detail.html', "views/#{modelName}/detail.html", @mergeEnv({model: modelDef}) %>
+	<% @generate 'views/edit.html', "views/#{modelName}/edit.html", @mergeEnv({model: modelDef}) %>
+	<% @generate 'js/controllers/list.controller.js', "js/controllers/#{modelName}/list.js", @mergeEnv({model: modelDef}) %>
+	<% @generate 'js/controllers/add.controller.js', "js/controllers/#{modelName}/add.js", @mergeEnv({model: modelDef}) %>
+	<% @generate 'js/controllers/detail.controller.js', "js/controllers/#{modelName}/detail.js", @mergeEnv({model: modelDef}) %>
+	<% @generate 'js/controllers/edit.controller.js', "js/controllers/#{modelName}/edit.js", @mergeEnv({model: modelDef}) %>
+<% end %>
+
 <% @generate 'resources/messages_en.json', "resources/messages_en.json", @mergeEnv({models: @models}) %>
 <% gulp.src('css/**/*.css').pipe(gulp.dest(@destDir + '/css/')); %>
 <% gulp.src('js/**/*.js').pipe(gulp.dest(@destDir + '/js/')); %>
@@ -28,6 +51,9 @@
 <% block 'javascripts-footer': %>
 	<% @generate 'js/app.js', 'js/app.js', {} %>
 	<script src="js/app.js"></script>
+	<% @generate 'js/view-states.js', 'js/view-states.js' %>
+	<script src="js/view-states.js"></script>
+
 	<% @generate 'js/controllers/auth.js', 'js/controllers/auth.js', {} %>
 	<script src="js/controllers/auth.js"></script>
 	<% for modelName, modelDef of @models: %>
