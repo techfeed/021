@@ -1,0 +1,39 @@
+(function() {
+  var app = angular.module('app');
+  
+  app.controller('<%= @model.name %>EditController', ['$scope', '<%= @model.name %>', '$rootScope', '$state',
+    function($scope, <%= @model.name %>, $rootScope, $state) {
+    var recordId = $state.params.id;
+    $scope.record = <%= @model.name %>.findById({id: recordId});
+    $scope.save = function() {
+      <% for name, def of @model.properties: %>
+        var _<%= name %> = $scope.record.<%= name %>;
+        <% switch def.type: %>
+          <% when 'number': %>
+            _<%= name %> = Number(_<%= name %>);
+          <% end %>
+          <% when 'date': %>
+            _<%= name %> = new Date(_<%= name %>).toISOString();
+          <% end %>
+          <% when 'boolean': %>
+            _<%= name %> = !!_<%= name %>;
+          <% end %>
+        <% end %>
+      <% end %>
+
+      var requestParams = {
+        id: recordId
+      };
+      <% for name, def of @model.properties: %>
+        requestParams['<%= name %>'] = _<%= name %>;
+      <% end %>
+
+      <%= @model.name %>
+        .update({where: {id: recordId}}, requestParams)
+        .$promise
+        .then(function(record) {
+          $state.go('<%= @model.name %>.detail', { id: recordId });
+        });
+    };
+  }]);
+})();

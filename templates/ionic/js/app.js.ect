@@ -1,0 +1,34 @@
+(function() {
+  ons.bootstrap('app', ['pascalprecht.translate', 'ui.router', 'lbServices']);
+  angular
+    .module('app')
+    .config(['$translateProvider', function ($translateProvider) {
+      // add translation table
+      $translateProvider
+        .useStaticFilesLoader({
+          prefix: '<%- @contextRoot %>/resources/messages_',
+          suffix: '.json'
+        })
+        .preferredLanguage('en')
+        .useSanitizeValueStrategy('escaped');
+    }])
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+      function($stateProvider, $urlRouterProvider, $locationProvider) {
+      $locationProvider.html5Mode(true);
+      $urlRouterProvider.otherwise('/login');
+
+      for (var stateName in __viewStates) {
+        if (stateName !== "")
+          $stateProvider.state(stateName, __viewStates[stateName]);
+      }
+    }])
+    .run(['$rootScope', '$state', function($rootScope, $state) {
+      $rootScope.$on('$stateChangeStart', function(event, next) {
+        // redirect to login page if not logged in
+        if (next.authenticate && !$rootScope.currentUser) {
+          event.preventDefault(); //prevent current page from loading
+          $state.go('forbidden');
+        }
+      });
+    }]);
+})();

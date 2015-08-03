@@ -1,0 +1,27 @@
+<ons-page>
+  <ons-toolbar>
+    <div class="left">
+      <ons-toolbar-button>
+        <ons-icon icon="fa-bars" style="font-size: 28px;" fixed-width="false"
+          onclick="leftMenu.toggleMenu()"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+    <div class="center">
+      {{'page.index.title' | translate}}
+    </div>
+  </ons-toolbar>
+  <ons-list>
+    <% for modelName, modelDef of @models: %>
+      <ons-list-item modifier="chevron">
+        <ons-row ui-sref="<%= modelName %>.list">
+          <ons-col width="30px">
+            <ons-icon icon="ion-folder" class="list-item-icon"></ons-icon>
+          </ons-col>
+          <ons-col>
+            {{'model.<%= modelName %>.name' | translate}}
+          </ons-col>
+        </ons-row>
+      </ons-list-item>
+    <% end %>
+  </ons-list>
+</ons-page>

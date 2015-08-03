@@ -1,0 +1,48 @@
+<ons-page>
+  <ons-toolbar>
+    <div class="left">
+      <ons-toolbar-button>
+        <ons-icon icon="ion-arrow-left-c" style="font-size: 28px;" fixed-width="false" ui-sref="<%= @model.name %>.list"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+    <div class="center">{{'model.<%= @model.name %>.name' | translate}}#{{record.id}}</div>
+    <div class="right">
+      <ons-toolbar-button>
+        <ons-icon icon="ion-edit" fixed-width="false" style="vertical-align: -4px;"
+          ui-sref="<%= @model.name %>.edit({id: record.id})"></ons-icon>
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+  <ons-list modifier="inset" class="form-layout">
+    <% for name, def of @model.properties: %>
+      <ons-list-item>
+        <ons-row>
+          <ons-col>
+            <label class="list-item-label">{{'model.<%= @model.name %>.property.<%= name %>' | translate}}</label>
+          </ons-col>
+          <ons-col align="right">
+            <% switch def.type: %>
+              <% when 'date': %>
+                {{record.<%= name %> | date: 'medium'}}
+              <% end %>
+              <% else: %>
+                {{record.<%= name %>}}
+              <% end %>
+            <% end %>
+          </ons-col>
+        </ons-row>
+      </ons-list-item>
+    <% end %>
+    <% ### %>
+    <% for relName, relDef of @model.relations: %>
+      <% @generate 'views/list.html', "views/#{modelName}/relation/#{relName}/list.html", @mergeEnv({model: modelDef}) %>
+    	<% @generate 'js/controllers/list.controller.js', "js/controllers/#{modelName}/list.js", @mergeEnv({model: modelDef}) %>
+      <% @generate '', 'views/<%= modelName %>/relation/<%= relName %>.html', {} %>
+      <ons-list-item modifier="chevron">
+        {{'model.<%= @model.name %>.relation.<%= relName %>' | translate}}
+      </ons-list-item>
+    <% end %>
+    <% ### %>
+  </ons-list>
+  <ons-button modifier="large--quiet" ng-click="remove()">{{'common.delete' | translate}}</ons-button>
+</ons-page>
